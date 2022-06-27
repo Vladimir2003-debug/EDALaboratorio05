@@ -1,8 +1,14 @@
 package datastructures;
 
 import java.util.List;
-
+import java.util.ArrayList;
+import java.util.Collection;
 public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterface<E>{
+    private Node<E> root;
+
+    public AVLTree(E root) {
+        this.root = new Node<E>(root);
+    }
 
     /**
      * Add the data as a leaf in the AVL.  Should traverse the tree to find the
@@ -14,7 +20,22 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      */
     @Override
     public void insert(E data) {
-        //TODO implement here!
+        root = insert(root, data);
+    }
+
+    protected Node<E> insert(Node<E> node, E data) {
+        if (node == null) {
+            return new Node<E>(data);
+        }
+        // Almacena en un int la comparacion con el nodo actual
+        int resC = data.compareTo(node.getData());
+        if (resC < 0) {
+            node.setLeft(insert(node.getLeft(), data));
+        } else if (resC > 0) {
+            node.setRight(insert(node.getRight(), data));
+        }
+
+        return node;
     }
 
     /**
@@ -87,8 +108,15 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      */
     @Override
     public List<E> preorder() {
-        //TODO implement here!
-        return null;
+        return preOrder(root);
+    }
+
+    private List<E> preOrder(Node<E> node) {
+        List<E> preorder = new ArrayList<E>();
+        preorder.add(node.getData());
+        if(node.getLeft() != null) preorder.addAll(preOrder(node.getLeft()));
+        if(node.getRight() != null) preorder.addAll(preOrder(node.getRight()));
+        return  preorder;
     }
 
     /**
@@ -96,10 +124,17 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      *
      * @return a postorder traversal of the tree, or an empty list
      */
-    @Override
     public List<E> postorder() {
-        //TODO implement here!
-        return null;
+        return postOrder(root);
+    }
+
+    private List<E> postOrder(Node<E> node) {
+        List<E> postorder = new ArrayList<E>();
+        if(node.getLeft() != null) postorder.addAll(postOrder(node.getLeft()));
+        if(node.getRight() != null) postorder.addAll(postOrder(node.getRight()));
+        postorder.add(node.getData());
+
+        return postorder;
     }
 
     /**
@@ -109,16 +144,22 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      */
     @Override
     public List<E> inorder() {
-        //TODO implement here!
-        return null;
+        return postOrder(root);
     }
 
+    private List<E> inOrder(Node<E> node) {
+        List<E> inorder = new ArrayList<E>();
+        if(node.getLeft() != null) inorder.addAll(inOrder(node.getLeft()));
+        inorder.add(node.getData());
+        if(node.getRight() != null) inorder.addAll(inOrder(node.getRight()));
+        return  inorder;  
+    }
     /**
      * Clear the tree.
      */
     @Override
     public void clear() {
-        //TODO implement here!
+        this.root = null;
     }
 
     /**
@@ -129,8 +170,7 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      * @return the height of the root of the tree, -1 if the tree is empty
      */
     @Override
-    public int height() {
-        //TODO implement here!
+    public int height() {     
         return 0;
     }
 
@@ -139,7 +179,6 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      */
     @Override
     public Node<E> getRoot() {
-        //TODO implement here!
-        return null;
+        return this.root;
     }
 }
