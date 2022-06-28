@@ -1,15 +1,39 @@
 package datastructures;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.ArrayList;
-import java.util.Collection;
 public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterface<E>{
     private Node<E> root;
+
+    public AVLTree() {
+        this.root = null;
+    }
 
     public AVLTree(E root) {
         this.root = new Node<E>(root);
     }
 
+    public Node<E> rotateSL(Node<E> node) {
+        Node<E> y = node.getRight();
+        Node<E> t2 = y.getLeft();
+
+        y.setLeft(node);
+        node.setRight(t2);
+
+        return y;
+    }
+
+    public Node<E> rotateSR(Node<E> node) {
+        Node<E> x = node.getLeft();
+        Node<E> t2 = x.getRight();
+
+        x.setRight(node);
+        node.setLeft(t2);
+
+        return x;
+    }
+    
     /**
      * Add the data as a leaf in the AVL.  Should traverse the tree to find the
      * appropriate location. If the data being added already exists in the tree,
@@ -31,10 +55,31 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
         int resC = data.compareTo(node.getData());
         if (resC < 0) {
             node.setLeft(insert(node.getLeft(), data));
+            node.setBalanceFactor(node.getBalanceFactor() - 1);
+        } else if(resC == 0) {
+            return null;
         } else if (resC > 0) {
             node.setRight(insert(node.getRight(), data));
+            node.setBalanceFactor(node.getBalanceFactor() + 1);
+        }        
+                
+        if(node.getBalanceFactor() > 1 ) 
+            if(node.getRight().getRight() != null)
+                return rotateSL(node);
+            else {
+                node.setRight(rotateSR(node.getRight()));
+                return rotateSL(node);
+            }
+            
+        if(node.getBalanceFactor() < -1 ){
+            if(node.getLeft().getLeft() != null)
+                return rotateSR(node);
+            else{
+                node.setLeft(rotateSL(node.getLeft()));
+                return rotateSR(node);
+            }
         }
-
+        
         return node;
     }
 
@@ -57,9 +102,51 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      */
     @Override
     public E remove(E data) {
-        //TODO implement here!
+        this.root = removeNode(data,this.root);
         return null;
     }
+    private Node<E> removeNode(E x , Node<E> actual) {
+        Node<E> res = actual;
+        if(actual == null)
+            throw new IllegalArgumentException();
+        
+        int resC = actual.getData().compareTo(x);
+        if (resC < 0)
+            res.setRight(removeNode(x, actual.getRight()));
+        else if (resC > 0)
+            res.setLeft(removeNode(x, actual.getLeft()));
+        else if (actual.getLeft() != null && actual.getRight() != null) {// dos hijos
+            // res.data = minRecover(actual.getRight()).data;
+            res.setData(minRecover(actual.getRight()).getData());
+            res.setRight(minRemove(actual.getRight()));
+        } else { // 1 hijo o ninguno
+            res = (actual.getLeft() != null) ? actual.getLeft() : actual.getRight();
+        }
+        return res;
+    }
+     public E minRecover() {
+        if (root == null) {
+            return null;
+        }
+        return minRecover(root).getData();
+    }
+
+        protected Node<E> minRemove(Node<E> actual) {
+        if (actual.getLeft() != null)
+            actual.setLeft(minRemove(actual.getLeft()));
+        else {
+            actual = actual.getRight();
+        }
+        return actual;
+    }
+
+    protected Node<E> minRecover(Node<E> node) {
+        if (node.getLeft() == null) {
+            return node;
+        }
+        return minRecover(node.getLeft());
+    }
+
 
     /**
      * Returns the data in the tree matching the parameter passed in.
@@ -73,8 +160,21 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      */
     @Override
     public E get(E data) {
-        //TODO implement here!
-        return null;
+        if(data == null)
+            throw new IllegalArgumentException("El parametro es null");
+        return get(root,data).getData();
+    }
+
+    protected Node<E> get(Node<E> node, E data) {
+        if(data.compareTo(node.getData()) == 0)
+            return node;
+        if(data.compareTo(node.getData()) < 0 && node.getLeft() != null)
+            return get(node.getLeft(), data);
+        if(data.compareTo(node.getData()) > 0 && node.getRight() != null)
+            return get(node.getRight(), data);
+        else
+            throw new NoSuchElementException();
+
     }
 
     /**
@@ -86,8 +186,9 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      */
     @Override
     public boolean contains(E data) {
-        //TODO implement here!
-        return false;
+        if(data == null)
+            throw new IllegalArgumentException("El parametro enviado es null");   
+        return get(data) != null;
     }
 
     /**
@@ -96,9 +197,15 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      * @return the number of elements in the tree
      */
     @Override
-    public int size() {
-        //TODO implement here!
-        return 0;
+    public int size() {        
+        return size(root);
+    }
+
+    private int size(Node<E> node) {
+        if(node == null )
+            return 0;
+        return size(node.getLeft()) + size(node.getRight()) + 1;    
+
     }
 
     /**
@@ -117,6 +224,20 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
         if(node.getLeft() != null) preorder.addAll(preOrder(node.getLeft()));
         if(node.getRight() != null) preorder.addAll(preOrder(node.getRight()));
         return  preorder;
+    }
+    /**
+     * Metodo que imprime el arbol en  izquierda-derecha-raiz
+     * @return el arbol en postorden
+     */
+    public String postOrden() {
+        return postOrden(root);
+    }
+
+    protected String postOrden(Node<E> node) {
+        if (node == null) {
+            return "";
+        }
+        return postOrden(node.getLeft()) + " " + postOrden(node.getRight()) + " " + node.toString() + "-"+ node.getBalanceFactor();
     }
 
     /**
@@ -144,7 +265,7 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      */
     @Override
     public List<E> inorder() {
-        return postOrder(root);
+        return inOrder(root);
     }
 
     private List<E> inOrder(Node<E> node) {
@@ -152,7 +273,7 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
         if(node.getLeft() != null) inorder.addAll(inOrder(node.getLeft()));
         inorder.add(node.getData());
         if(node.getRight() != null) inorder.addAll(inOrder(node.getRight()));
-        return  inorder;  
+        return  inorder;
     }
     /**
      * Clear the tree.
@@ -170,8 +291,22 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      * @return the height of the root of the tree, -1 if the tree is empty
      */
     @Override
-    public int height() {     
-        return 0;
+    public int height() {
+        if(this.root == null) 
+            return -1;                
+        return height(root);
+    }
+
+    private int height(Node<E> node) {
+        if(node == null)
+            return 0;
+        if(node.getLeft() == null && node.getRight() == null)
+            return 1;
+        if(node.getBalanceFactor() == -1)
+            return height(node.getLeft()) + 1;
+        if(node.getBalanceFactor() == 1)
+            return height(node.getRight()) + 1;
+        return height(node.getLeft()) + 1;
     }
 
     /**
