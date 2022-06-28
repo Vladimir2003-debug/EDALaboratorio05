@@ -9,7 +9,7 @@ public class Node<E extends Comparable<? super E>> {
      * (ii) Attributes e.g., data, leftNode, rightNode, balanceFactor. All
      * (iii) Implements accessors for the attributes i.e., get and set methods
      */
-    private E data;
+    E data;
     private Node<E> leftNode;
     private Node<E> rightNode;
     private int balanceFactor;
@@ -18,6 +18,10 @@ public class Node<E extends Comparable<? super E>> {
         this.data = data;
     }
     
+    public Node(E data, int balanceFactor) {
+        this.balanceFactor = balanceFactor;
+        this.data = data;
+    }
     public Node(E data, Node<E> leftNode, Node<E> rightNode) {
         this.data = data;
         this.leftNode = leftNode;
@@ -32,19 +36,19 @@ public class Node<E extends Comparable<? super E>> {
         this.data = data;
     }
 
-    public Node<E> getLeftNode() {
+    public Node<E> getLeft() {
         return leftNode;
     }
 
-    public void setLeftNode(Node<E> leftNode) {
+    public void setLeft(Node<E> leftNode) {
         this.leftNode = leftNode;
     }
 
-    public Node<E> getRightNode() {
+    public Node<E> getRight() {
         return rightNode;
     }
 
-    public void setRightNode(Node<E> rightNode) {
+    public void setRight(Node<E> rightNode) {
         this.rightNode = rightNode;
     }
 
@@ -57,6 +61,6 @@ public class Node<E extends Comparable<? super E>> {
     }
 
     public String toString() {
-        return data.toString() + " " + leftNode.toString() + " " + rightNode.toString();
+        return data.toString();
     }
 }
