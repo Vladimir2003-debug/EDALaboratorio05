@@ -21,8 +21,8 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
         h.setLeft(node);
         node = h;
 
-        node.setBalanceFactor(node.getBalanceFactor() - 2);
-        node.getRight().setBalanceFactor(node.getBalanceFactor() + 1);
+        node.setBalanceFactor(node.getBalanceFactor() - 1);
+        node.getRight().setBalanceFactor(node.getBalanceFactor());
         return node;
     }
 
@@ -34,7 +34,7 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
         node = h;
         
         node.setBalanceFactor(node.getBalanceFactor() + 1);
-        node.getRight().setBalanceFactor(node.getBalanceFactor() + 1);
+        node.getRight().setBalanceFactor(node.getBalanceFactor());
         return node;
     }
     
@@ -64,21 +64,22 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
         } else if (resC > 0) {
             node.setRight(insert(node.getRight(), data));
         }        
-        
+
         node.setBalanceFactor(balance(node));
+    
         if(node.getBalanceFactor() > 1 ) 
-            if(node.getRight().getData().compareTo(data) > 0)
+            if(node.getLeft().getData().compareTo(data) < 0)
                 return rotateSL(node);
             else {
-                node.setLeft(rotateSL(node.getLeft()));
+                node.setLeft(rotateSR(node.getRight()));
                 return rotateSL(node);
             }
             
         if(node.getBalanceFactor() < -1 ){
-            if(node.getLeft().getData().compareTo(data) < 0)
+            if(node.getLeft().getData().compareTo(data) > 0)
                 return rotateSR(node);
             else{
-                node.setRight(rotateSR(node.getRight()));
+                node.setRight(rotateSL(node.getLeft()));
                 return rotateSR(node);
             }
         }
@@ -87,9 +88,8 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
     }
 
     private int balance(Node<E> node) {
-        if(node == null)
-            return -1;
-        return 1 + Math.max(height(node.getLeft()), height(node.getRight()));
+        int fe = height(node.getRight()) - height(node.getLeft());
+        return fe;
     }
 
     /**
