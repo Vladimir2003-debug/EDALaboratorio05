@@ -22,7 +22,7 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
         node = h;
 
         node.setBalanceFactor(node.getBalanceFactor() - 1);
-        node.getRight().setBalanceFactor(node.getBalanceFactor());
+        node.getLeft().setBalanceFactor(node.getBalanceFactor());
         return node;
     }
 
@@ -66,12 +66,12 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
         }        
 
         node.setBalanceFactor(balance(node));
-    
+        
         if(node.getBalanceFactor() > 1 ) 
-            if(node.getLeft().getData().compareTo(data) < 0)
+            if(node.getRight().getData().compareTo(data) < 0)
                 return rotateSL(node);
             else {
-                node.setLeft(rotateSR(node.getRight()));
+                node.setRight(rotateSR(node.getRight()));
                 return rotateSL(node);
             }
             
@@ -79,13 +79,15 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
             if(node.getLeft().getData().compareTo(data) > 0)
                 return rotateSR(node);
             else{
-                node.setRight(rotateSL(node.getLeft()));
+                node.setLeft(rotateSL(node.getLeft()));
                 return rotateSR(node);
             }
         }
-        
+    
         return node;
     }
+
+
 
     private int balance(Node<E> node) {
         int fe = height(node.getRight()) - height(node.getLeft());
