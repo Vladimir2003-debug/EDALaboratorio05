@@ -62,22 +62,55 @@
 # SOLUCION Y RESULTADOS
 ## I. SOLUCION DE EJERCICIOS/PROBLEMAS
 ### ORGANIZACION
+
+```
+
+├───Main.java
+├───README.md
+│
+├───datastructures
+│   ├───AVLTree.java
+│   ├───AVLTreeInterface.java
+│   └───Node.java
+│       
+├───exercises
+│   └───Exercises.java
+│       
+└───imagenes
+    
+``` 
+Donde:
+
+- Main.java donde se hacen los test del ejercicio 1 y 3
+- excecises donde se almacena la clase que contiene el ejercicio 1
+- datastructure contiene los archivos correspondientes a la implementacion del arbol AVL
+- imagenes donde se almacenan las imagenes que contiene README.md
     
 ### RESOLUCION
 #### EJERCICIO 1
 
+El primer ejercicio consiste en comprobar el balanceo de corchetes. Los corchetes se consideran balanceados si:
+    - No tiene parentesis que no coincidan.
+    - El subconjunto de corchetes encerrado dentro de los límites de un par de corchetes emparejados también es un par de corchetes emparejados.
+Para ello tendremos el siguiente metodo:
+    
 ```java
+    // Los corchetes de inicio como de cierre estan a un mismo nivel 
     String begin = "([{";
     String end = ")]}";
     boolean balance;
     int i = 0;
+    
     while(i < a.length()/2) {
+        //Comprueba si el corchete del inicio(begin) corresponde al corchete de fin(end) 
         balance = begin.indexOf(a.charAt(i)) != end.indexOf(a.charAt(a.length()- 1 - i));
         if (balance) {
+        //Retorna no terminando con el bucle y el metodo
             return "NO";
         }
             i++;
     }
+    // Si no hubo problemas retorna si
     return "YES";
 ```
     
@@ -85,60 +118,116 @@
     
 Simular las siguientes operaciones de un árbol AVL
 -Inserción: 100 - 200 - 300 - 400 - 500 - 50 - 25 - 350 - 375 - 360 - 355 - 150 - 175 - 120 - 190.
--Después de crear un árbol AVL, realice la eliminación: 100 - 200 - 300 - 400 - 500 - 50 - 25 - 350 - 375 - 360 - 355 - 150 - 175 - 120 - 190.
 -Para este ejercicio tienes que escribir el paso a paso del desarrollo de cada operación donde se muestra gráficamente el estado del árbol así como el factor de equilibrio para cada nodo y el tipo de operación que se está realizando, es decir, inserción, eliminación, rotación.
 
 - Primero se inserta el primer nodo<br>
 ![arbol](imagenes/1.png)
 
-- Luego al insertar 200 no cambia<br>
+-200<br>
 ![arbol](imagenes/2.png)
 
-- Al insertar 300 se hace una rotacion simple izquierda<br>
+- 300 rotacion simple izquierda en 200<br>
 ![arbol](imagenes/3.png)
 
-- El 400 se inserta normalmente<br>
+- 400<br>
 ![arbol](imagenes/4.png)
                            
-- El numero 500 requiere una rotacion simple izquierda<br>
+- 500 rotacion simple izquierda en 400<br>
 ![arbol](imagenes/5.png)
 
-- El 50 se inserta normalmente<br>
+- 50<br>
 ![arbol](imagenes/6.png)                    
                            
-- Al insertar 25 se requiere una rotacion simple derecha<br>
+- 25 se requiere una rotacion simple derecha en 50<br>
 ![arbol](imagenes/7.png)
                            
-- Insertar 350 no genera problemas<br>
+- 350 <br>
 ![arbol](imagenes/8.png)
 
-- Insertar 375 requiere una rotacion simple izquierda<br>
+- 375 requiere una rotacion simple izquierda en 350<br>
 ![arbol](imagenes/9.png)
                    
-- Insertar 360 requiere una rotacion derecha y luego una izquierda<br>
+- 360 requiere una rotacion derecha y luego una izquierda en 375<br>
 ![arbol](imagenes/15.png)
 
-- Insertar 355 requiere una rotacion derecha e izquierda en 350<br>
+- 355 requiere una rotacion derecha e izquierda en 350 <br>
 ![arbol](imagenes/10.png)
 
-- Insertar 150 tambien requiere rotacion derecha izquierda pero en 100<br>
+- 150 requiere rotacion derecha izquierda en 100<br>
 ![arbol](imagenes/11.png)
                            
-- Insertar 175 no requiere rotaciones<br>
+- 175<br>
 ![arbol](imagenes/12.png)
                            
-- La inserccion de 120 tampoco require de rotaciones<br>
+- 120<br>
 ![arbol](imagenes/13.png)
                     
-- Y finalmente, 190 require rotar a la izquierda y luego derecha en 175<br>
+-190 require rotar a la izquierda y luego derecha en 175<br>
 ![arbol](imagenes/14.png)
-                           
-                           
+
+-Después de crear un árbol AVL, realice la eliminación: 100 - 200 - 300 - 400 - 500 - 50 - 25 - 350 - 375 - 360 - 355 - 150 - 175 - 120 - 190.
+
+- Elimiacion de 100 implica una rotacion izquierda
+![arbol](imagenes/16.png)
+
+- Eliminar 200 no da rotaciones<br>
+![arbol](imagenes/17.png)
+
+- Si se elimina 300 debe de hacerse una rotacion izquierda derecha en 150<br>
+![arbol](imagenes/18.png)
+
+- 400<br>
+![arbol](imagenes/19.png)
+  
+- 500 se debe hacer rotacion en 360 <br>
+![arbol](imagenes/20.png)
+
+- 50<br>
+![arbol](imagenes/21.png)
+
+- 25<br>
+![arbol](imagenes/22.png)
+  
+- 350<br>
+![arbol](imagenes/23.png)
+
+- 375<br>
+![arbol](imagenes/24.png)
+
+- 360<br>
+![arbol](imagenes/25.png)
+
+- 355 una rotacion simple en 150 <br>
+![arbol](imagenes/26.png)
+
+- 150 rotacion simple en 190<br>
+![arbol](imagenes/27.png)
+
+- 175<br>
+![arbol](imagenes/28.png)
+
+- 120<br>
+![arbol](imagenes/29.png)
+
+-190<br>
+    
 #### EJERCICIO 3
+Implementar un arbol AVL conlas interfacecs dadas. El arbol AVL se ubica en /.datastructures
+Para la realizacion del arbol AVL se considero la interfaz con los metodos
+    - insert   
+    - remove
+    - get
+    - contains
+    - size
+    - preorder
+    - postorder
+    - inorder
+    - clear
+    - height
+    - getRoot
+La mayoria de estos metodos requiren un conocimiento en recursividad.
     
 ## II. CONCLUSIONES
-    
-# CONCLUSIONES
 
     
 # RETROALIMENTACION GENERAL
