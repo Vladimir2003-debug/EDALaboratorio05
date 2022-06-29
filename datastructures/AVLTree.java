@@ -15,25 +15,27 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
     }
 
     public Node<E> rotateSL(Node<E> node) {
-        Node<E> y = node.getRight();
-        Node<E> t2 = y.getLeft();
+        Node<E> h = node.getRight();
 
-        y.setLeft(node);
-        node.setRight(t2);
+        node.setRight(h.getLeft());
+        h.setLeft(node);
+        node = h;
+
         node.setBalanceFactor(node.getBalanceFactor() - 2);
-        y.setBalanceFactor(node.getBalanceFactor() - 1);       
-        return y;
+        node.getRight().setBalanceFactor(node.getBalanceFactor() + 1);
+        return node;
     }
 
     public Node<E> rotateSR(Node<E> node) {
-        Node<E> x = node.getLeft();
-        Node<E> t2 = x.getRight();
-
-        x.setRight(node);
-        node.setLeft(t2);
-        node.setBalanceFactor(node.getBalanceFactor() + 2);
-        x.setBalanceFactor(x.getBalanceFactor() + 1);
-        return x;
+        Node<E> h = node.getLeft();
+        
+        node.setLeft(h.getRight());
+        h.setRight(node);
+        node = h;
+        
+        node.setBalanceFactor(node.getBalanceFactor() + 1);
+        node.getRight().setBalanceFactor(node.getBalanceFactor() + 1);
+        return node;
     }
     
     /**
@@ -57,32 +59,37 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
         int resC = data.compareTo(node.getData());
         if (resC < 0) {
             node.setLeft(insert(node.getLeft(), data));
-            node.setBalanceFactor(node.getBalanceFactor() - 1);
         } else if(resC == 0) {
             return null;
         } else if (resC > 0) {
             node.setRight(insert(node.getRight(), data));
-            node.setBalanceFactor(node.getBalanceFactor() + 1);
         }        
-                
+        
+        node.setBalanceFactor(balance(node));
         if(node.getBalanceFactor() > 1 ) 
-            if(node.getRight().getRight() != null)
+            if(node.getRight().getData().compareTo(data) > 0)
                 return rotateSL(node);
             else {
-                node.setRight(rotateSR(node.getRight()));
+                node.setLeft(rotateSL(node.getLeft()));
                 return rotateSL(node);
             }
             
         if(node.getBalanceFactor() < -1 ){
-            if(node.getLeft().getLeft() != null)
+            if(node.getLeft().getData().compareTo(data) < 0)
                 return rotateSR(node);
             else{
-                node.setLeft(rotateSL(node.getLeft()));
+                node.setRight(rotateSR(node.getRight()));
                 return rotateSR(node);
             }
         }
         
         return node;
+    }
+
+    private int balance(Node<E> node) {
+        if(node == null)
+            return -1;
+        return 1 + Math.max(height(node.getLeft()), height(node.getRight()));
     }
 
     /**
@@ -104,30 +111,25 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
      */
     @Override
     public E remove(E data) {
-        this.root = removeNode(data,this.root);
+        this.root = removeNode(this.root, data);
         return null;
     }
-    private Node<E> removeNode(E x , Node<E> actual) {
+    private Node<E> removeNode(Node<E> actual, E data) {
         Node<E> res = actual;
         if(actual == null)
             throw new IllegalArgumentException();
         
-        int resC = actual.getData().compareTo(x);
+        int resC = actual.getData().compareTo(data);
         if (resC < 0)
-            res.setRight(removeNode(x, actual.getRight()));
+            res.setRight(removeNode(actual.getRight(), data));
         else if (resC > 0)
-            res.setLeft(removeNode(x, actual.getLeft()));
+            res.setLeft(removeNode(actual.getLeft(), data));
         else if (actual.getLeft() != null && actual.getRight() != null) {// dos hijos
             // res.data = minRecover(actual.getRight()).data;
             res.setData(minRecover(actual.getRight()).getData());
             res.setRight(minRemove(actual.getRight()));
         } else { // 1 hijo o ninguno
             res = (actual.getLeft() != null) ? actual.getLeft() : actual.getRight();
-        }
-
-        if(actual.getBalanceFactor() > 1) {
-            if(actual.getLeft() != null)
-                return rotateSR(actual);
         }
             
         return res;
