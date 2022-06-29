@@ -62,6 +62,29 @@
 # SOLUCION Y RESULTADOS
 ## I. SOLUCION DE EJERCICIOS/PROBLEMAS
 ### ORGANIZACION
+
+```
+
+├───Main.java
+├───README.md
+│
+├───datastructures
+│   ├───AVLTree.java
+│   ├───AVLTreeInterface.java
+│   └───Node.java
+│       
+├───exercises
+│   └───Exercises.java
+│       
+└───imagenes
+    
+``` 
+Donde:
+
+- Main.java donde se hacen los test del ejercicio 1 y 3
+- excecises donde se almacena la clase que contiene el ejercicio 1
+- datastructure contiene los archivos correspondientes a la implementacion del arbol AVL
+- imagenes donde se almacenan las imagenes que contiene README.md
     
 ### RESOLUCION
 #### EJERCICIO 1
@@ -85,7 +108,6 @@
     
 Simular las siguientes operaciones de un árbol AVL
 -Inserción: 100 - 200 - 300 - 400 - 500 - 50 - 25 - 350 - 375 - 360 - 355 - 150 - 175 - 120 - 190.
--Después de crear un árbol AVL, realice la eliminación: 100 - 200 - 300 - 400 - 500 - 50 - 25 - 350 - 375 - 360 - 355 - 150 - 175 - 120 - 190.
 -Para este ejercicio tienes que escribir el paso a paso del desarrollo de cada operación donde se muestra gráficamente el estado del árbol así como el factor de equilibrio para cada nodo y el tipo de operación que se está realizando, es decir, inserción, eliminación, rotación.
 
 - Primero se inserta el primer nodo<br>
@@ -132,8 +154,53 @@ Simular las siguientes operaciones de un árbol AVL
                     
 - Y finalmente, 190 require rotar a la izquierda y luego derecha en 175<br>
 ![arbol](imagenes/14.png)
-                           
-                           
+
+-Después de crear un árbol AVL, realice la eliminación: 100 - 200 - 300 - 400 - 500 - 50 - 25 - 350 - 375 - 360 - 355 - 150 - 175 - 120 - 190.
+
+- Elimiacion de 100 implica una rotacion izquierda
+![arbol](imagenes/16.png)
+
+- 200<br>
+![arbol](imagenes/17.png)
+
+- 300<br>
+![arbol](imagenes/18.png)
+
+- 400<br>
+![arbol](imagenes/19.png)
+  
+- 500<br>
+![arbol](imagenes/20.png)
+
+- 50<br>
+![arbol](imagenes/21.png)
+
+- 25<br>
+![arbol](imagenes/22.png)
+  
+- 350<br>
+![arbol](imagenes/23.png)
+
+- 375<br>
+![arbol](imagenes/24.png)
+
+- 360<br>
+![arbol](imagenes/25.png)
+
+- 355<br>
+![arbol](imagenes/26.png)
+
+- 150<br>
+![arbol](imagenes/27.png)
+
+- 175<br>
+![arbol](imagenes/28.png)
+
+- 120<br>
+![arbol](imagenes/29.png)
+
+-190<br>
+    
 #### EJERCICIO 3
     
 ## II. CONCLUSIONES
