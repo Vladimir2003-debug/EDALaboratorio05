@@ -14,8 +14,6 @@ public class Main {
         tree.insert(8);
         tree.insert(11);
         tree.insert(13);
-        tree.insert(32);
-        tree.insert(33);
         System.out.println(tree.postOrden());
         System.out.println(tree.get(14));
         System.out.println(tree.size());
