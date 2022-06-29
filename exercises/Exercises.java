@@ -15,9 +15,18 @@ public class Exercises {
      * @return YES if the brackets are balanced
      *         NO if the brackets are not balanced
      */
-    public String isBalanced(String a) {
-        //TODO implement here!
-
-        return "NO";
+    public static String isBalanced(String a) {
+        String begin = "([{";
+        String end = ")]}";
+        boolean balance;
+        int i = 0;
+        while(i < a.length()/2) {
+            balance = begin.indexOf(a.charAt(i)) != end.indexOf(a.charAt(a.length()- 1 - i));
+            if (balance) {
+                return "NO";
+            }
+            i++;
+        }
+        return "YES";
     }
 }
