@@ -23,7 +23,6 @@
 <span style="font-weight:bold;">INFORME  DE LABORATORIO</span><br />
 </div>
 
-
 <table>
 <theader>
 <tr><th colspan="6">INFORMACIÓN BÁSICA</th></tr>
@@ -60,6 +59,48 @@
 </tdbody>
 </table>
 
-# Árboles
+# SOLUCION Y RESULTADOS
+## I. SOLUCION DE EJERCICIOS/PROBLEMAS
+### ORGANIZACION
+    
+### RESOLUCION
+#### EJERCICIO 1
 
-#
+```java
+    String begin = "([{";
+    String end = ")]}";
+    boolean balance;
+    int i = 0;
+    while(i < a.length()/2) {
+        balance = begin.indexOf(a.charAt(i)) != end.indexOf(a.charAt(a.length()- 1 - i));
+        if (balance) {
+            return "NO";
+        }
+            i++;
+    }
+    return "YES";
+```
+    
+#### EJERCICIO 2
+    
+Simular las siguientes operaciones de un árbol AVL
+-Inserción: 100 - 200 - 300 - 400 - 500 - 50 - 25 - 350 - 375 - 360 - 355 - 150 - 175 - 120 - 190.
+-Después de crear un árbol AVL, realice la eliminación: 100 - 200 - 300 - 400 - 500 - 50 - 25 - 350 - 375 - 360 - 355 - 150 - 175 - 120 - 190.
+-Para este ejercicio tienes que escribir el paso a paso del desarrollo de cada operación donde se muestra gráficamente el estado del árbol así como el factor de equilibrio para cada nodo y el tipo de operación que se está realizando, es decir, inserción, eliminación, rotación.
+ 
+
+#### EJERCICIO 3
+    
+## II. CONCLUSIONES
+    
+# CONCLUSIONES
+
+    
+# RETROALIMENTACION GENERAL
+    
+    
+# REFERENCIAS Y BIBLIOGRAFIA
+
+```
+https://www.cs.usfca.edu/~galles/visualization/AVLtree.html
+```
