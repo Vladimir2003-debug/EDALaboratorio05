@@ -87,8 +87,52 @@ Simular las siguientes operaciones de un árbol AVL
 -Inserción: 100 - 200 - 300 - 400 - 500 - 50 - 25 - 350 - 375 - 360 - 355 - 150 - 175 - 120 - 190.
 -Después de crear un árbol AVL, realice la eliminación: 100 - 200 - 300 - 400 - 500 - 50 - 25 - 350 - 375 - 360 - 355 - 150 - 175 - 120 - 190.
 -Para este ejercicio tienes que escribir el paso a paso del desarrollo de cada operación donde se muestra gráficamente el estado del árbol así como el factor de equilibrio para cada nodo y el tipo de operación que se está realizando, es decir, inserción, eliminación, rotación.
- 
+
+- Primero se inserta el primer nodo<br>
+![arbol](imagenes/1.png)
+
+- Luego al insertar 200 no cambia<br>
+![arbol](imagenes/2.png)
+
+- Al insertar 300 se hace una rotacion simple izquierda<br>
+![arbol](imagenes/3.png)
+
+- El 400 se inserta normalmente<br>
+![arbol](imagenes/4.png)
+                           
+- El numero 500 requiere una rotacion simple izquierda<br>
+![arbol](imagenes/5.png)
+
+- El 50 se inserta normalmente<br>
+![arbol](imagenes/6.png)                    
+                           
+- Al insertar 25 se requiere una rotacion simple derecha<br>
+![arbol](imagenes/7.png)
+                           
+- Insertar 350 no genera problemas<br>
+![arbol](imagenes/8.png)
+
+- Insertar 375 requiere una rotacion simple izquierda<br>
+![arbol](imagenes/9.png)
+                   
+- Insertar 360 requiere una rotacion derecha y luego una izquierda<br>
+![arbol](imagenes/15.png)
+
+- Insertar 355 requiere una rotacion derecha e izquierda en 350<br>
+![arbol](imagenes/10.png)
+
+- Insertar 150 tambien requiere rotacion derecha izquierda pero en 100<br>
 ![arbol](imagenes/11.png)
+                           
+- Insertar 175 no requiere rotaciones<br>
+![arbol](imagenes/12.png)
+                           
+- La inserccion de 120 tampoco require de rotaciones<br>
+![arbol](imagenes/13.png)
+                    
+- Y finalmente, 190 require rotar a la izquierda y luego derecha en 175<br>
+![arbol](imagenes/14.png)
+                           
                            
 #### EJERCICIO 3
     
