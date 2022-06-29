@@ -20,7 +20,8 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
 
         y.setLeft(node);
         node.setRight(t2);
-
+        node.setBalanceFactor(node.getBalanceFactor() - 2);
+        y.setBalanceFactor(node.getBalanceFactor() - 1);       
         return y;
     }
 
@@ -30,7 +31,8 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
 
         x.setRight(node);
         node.setLeft(t2);
-
+        node.setBalanceFactor(node.getBalanceFactor() + 2);
+        x.setBalanceFactor(x.getBalanceFactor() + 1);
         return x;
     }
     
@@ -122,22 +124,13 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
         } else { // 1 hijo o ninguno
             res = (actual.getLeft() != null) ? actual.getLeft() : actual.getRight();
         }
-        return res;
-    }
-     public E minRecover() {
-        if (root == null) {
-            return null;
-        }
-        return minRecover(root).getData();
-    }
 
-        protected Node<E> minRemove(Node<E> actual) {
-        if (actual.getLeft() != null)
-            actual.setLeft(minRemove(actual.getLeft()));
-        else {
-            actual = actual.getRight();
+        if(actual.getBalanceFactor() > 1) {
+            if(actual.getLeft() != null)
+                return rotateSR(actual);
         }
-        return actual;
+            
+        return res;
     }
 
     protected Node<E> minRecover(Node<E> node) {
@@ -147,6 +140,16 @@ public class AVLTree<E extends Comparable<? super E>> implements AVLTreeInterfac
         return minRecover(node.getLeft());
     }
 
+    protected Node<E> minRemove(Node<E> actual) {
+        if (actual.getLeft() != null)
+            actual.setLeft(minRemove(actual.getLeft()));
+        else {
+            actual = actual.getRight();
+        }
+        return actual;
+    }
+
+    
 
     /**
      * Returns the data in the tree matching the parameter passed in.
